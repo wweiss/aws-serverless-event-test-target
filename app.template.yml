@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  EventTestTarget:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs8.10
+      CodeUri: ./lambda-dist
+      Handler: lambda/EventTestTargetHandler.handler
+      Tracing: Active
+      MemorySize: 512
+      Timeout: 60
+
+Outputs:
+  EventTestTargetFunctionName:
+    Value: !Ref EventTestTarget
+    Export:
+      Name: !Sub ${AWS::StackName}-EventTestTargetFunctionName
+  EventTestTargetFunctionArn:
+    Value: !GetAtt EventTestTarget.Arn
+    Export:
+      Name: !Sub ${AWS::StackName}-EventTestTargetFunctionArn
