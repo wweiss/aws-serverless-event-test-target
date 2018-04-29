@@ -1,38 +1,27 @@
 {
   "name": "aws-serverless-event-test-target",
   "version": "1.0.0",
-  "description":
-    "A serverless app that simply receives and logs events that it receives.",
+  "description": "A serverless app that simply receives and logs events that it receives.",
   "main": "index.js",
   "author": "William Weiss <william@codification.org>",
   "license": "MIT",
   "private": false,
   "scripts": {
     "clean": "rimraf \"dist/**\" \"lambda-dist/**\"",
-    "test": "tape -r ts-node/register src/**/*.spec.ts",
-    "package":
-      "gulp package && aws cloudformation package --template-file ./app.template.yml --output-template-file ./.aws_config/packaged-template.yml --s3-bucket file://.aws_config/s3Bucket",
-    "build": "yarn clean && yarn test && yarn package ",
-    "deploy":
-      "aws cloudformation deploy --template-file ./.aws_config/packaged-template.yml --stack-name file://.aws_config/stackName --capabilities CAPABILITY_IAM"
+    "package": "gulp package && aws cloudformation package --template-file ./app.template.yml --output-template-file ./.aws_config/packaged-template.yml --s3-bucket file://.aws_config/s3Bucket",
+    "build": "yarn clean && yarn package ",
+    "deploy": "aws cloudformation deploy --template-file ./.aws_config/packaged-template.yml --stack-name file://.aws_config/stackName --capabilities CAPABILITY_IAM"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/aws-lambda": "^8.10.1",
-    "@types/dotenv": "^4.0.3",
     "@types/node": "^9.6.6",
-    "@types/tape": "^4.2.32",
-    "@types/winston": "^2.3.9",
     "aws-lambda": "^0.1.2",
     "aws-sdk": "^2.226.1",
-    "cross-env": "^5.1.4",
-    "env-cmd": "^8.0.1",
     "gulp": "^3.9.1",
     "gulp-install": "^1.1.0",
     "gulp-typescript": "^4.0.2",
     "rimraf": "^2.6.2",
-    "tape": "^4.9.0",
-    "ts-node": "^6.0.0",
     "tslint": "^5.9.1",
     "typescript": "^2.8.3"
   }
