@@ -6,8 +6,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: nodejs8.10
-      CodeUri: ./lambda-dist
-      Handler: EventTestTargetHandler.handler
+      CodeUri: ./dist/testTarget.js
+      Handler: testTarget.handler
       Tracing: Active
       MemorySize: 512
       Timeout: 60

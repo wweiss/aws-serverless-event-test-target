@@ -2,5 +2,5 @@ node_modules
 dist
 lambda-dist
 .env
-.aws_config
-packaged-template.yml
+tmp
+*.log

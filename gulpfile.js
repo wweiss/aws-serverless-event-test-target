@@ -1,25 +1,53 @@
+require('dotenv').config();
+
 const gulp = require('gulp');
-const ts = require('gulp-typescript');
-const install = require('gulp-install');
+const del = require('del');
+const run = require('gulp-run-command').default;
 
-// pull in the project TypeScript config
-const tsProject = ts.createProject('tsconfig.json');
+const vars = {
+  stackName: process.env.STACK_NAME,
+  artifactBucket: process.env.ARTIFACT_BUCKET
+};
 
-gulp.task('scripts', () => {
-  const tsResult = tsProject.src().pipe(tsProject());
-  return tsResult.js.pipe(gulp.dest('dist'));
-});
+const paths = {
+  src: 'src',
+  dist: 'dist',
+  tmp: 'tmp'
+};
 
-gulp.task('watch', ['scripts'], () => {
-  gulp.watch('src/**/*.ts', ['scripts']);
-});
+const clean = () => {
+  return del([paths.dist, paths.tmp]);
+};
+exports.clean = clean;
 
-gulp.task('package', ['scripts'], function() {
-  gulp
-    .src('./package.json')
-    .pipe(gulp.dest('lambda-dist/'))
-    .pipe(install({ production: true }));
-  gulp.src('dist/**').pipe(gulp.dest('lambda-dist/'));
-});
+const configureTemp = () => {
+  return gulp
+    .src('app.template.yaml', {
+      read: false
+    })
+    .pipe(gulp.dest(paths.tmp));
+}
+exports.configureTemp = configureTemp;
 
-gulp.task('default', ['watch']);
+const packageCloudFormation = () => {
+  return run(`aws cloudformation package \
+  --template app.template.yaml \
+  --s3-bucket ${vars.artifactBucket} \
+  --output-template ${paths.tmp}/packaged-sam.yaml`)();
+}
+exports.packageCloudFormation = packageCloudFormation;
+
+const package = gulp.series(configureTemp, packageCloudFormation);
+exports.package = package;
+
+const deployCloudformation = () => {
+  return run(`aws cloudformation deploy \
+--template-file ${paths.tmp}/packaged-sam.yaml \
+--stack-name ${vars.stackName} \
+--capabilities CAPABILITY_IAM \
+--no-fail-on-empty-changeset`)();
+}
+exports.deployCloudformation = deployCloudformation;
+
+const deploy = gulp.series(deployCloudformation);
+exports.deploy = deploy;

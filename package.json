@@ -7,22 +7,33 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "clean": "rimraf \"dist/**\" \"lambda-dist/**\"",
-    "package": "gulp package && aws cloudformation package --template-file ./app.template.yml --output-template-file ./.aws_config/packaged-template.yml --s3-bucket file://.aws_config/s3Bucket",
-    "build": "yarn clean && yarn package ",
-    "deploy": "aws cloudformation deploy --template-file ./.aws_config/packaged-template.yml --stack-name file://.aws_config/stackName --capabilities CAPABILITY_IAM"
+    "clean": "gulp clean",
+    "package": "gulp package",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "build": "yarn clean && webpack --mode=production",
+    "deploy": "gulp deploy",
+    "preversion": "yarn lint",
+    "version": "yarn format && git add -A .",
+    "postversion": "git push && git push --tags"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/aws-lambda": "^8.10.1",
+    "@types/dotenv": "^6.1.1",
     "@types/node": "^9.6.6",
     "aws-lambda": "^0.1.2",
     "aws-sdk": "^2.226.1",
-    "gulp": "^3.9.1",
-    "gulp-install": "^1.1.0",
-    "gulp-typescript": "^4.0.2",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.9.1",
-    "typescript": "^2.8.3"
+    "del": "^5.0.0",
+    "dotenv": "^8.0.0",
+    "gulp": "^4.0.0",
+    "gulp-run-command": "^0.0.9",
+    "prettier": "^1.18.2",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^2.8.3",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6"
   }
 }
