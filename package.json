@@ -1,6 +1,6 @@
 {
   "name": "aws-serverless-event-test-target",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A serverless app that simply receives and logs events that it receives.",
   "main": "index.js",
   "author": "William Weiss <william@codification.org>",
