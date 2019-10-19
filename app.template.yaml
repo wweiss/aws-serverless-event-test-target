@@ -5,7 +5,7 @@ Resources:
   EventTestTarget:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       CodeUri: ./dist/testTarget.js
       Handler: testTarget.handler
       Tracing: Active
