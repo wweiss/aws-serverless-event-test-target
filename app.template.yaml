@@ -1,6 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
+Parameters:
+  LoggingLevel:
+    Type: String
+    Default: INFO
+    Description: Setting to WARN or below will disable.
+
 Resources:
   EventTestTarget:
     Type: AWS::Serverless::Function
@@ -11,6 +17,9 @@ Resources:
       Tracing: Active
       MemorySize: 512
       Timeout: 60
+      Environment:
+        Variables:
+          LOGGING_LEVEL: !Ref LoggingLevel
 
 Outputs:
   EventTestTargetFunctionName:
