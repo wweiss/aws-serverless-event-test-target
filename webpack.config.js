@@ -8,7 +8,7 @@ const isProduction = webpackTask.buildConfig.production;
 const webpackConfiguration = {
     mode: isProduction ? 'production' : 'development',
     entry: {
-        'testTarget':  path.join(__dirname, webpackTask.buildConfig.libFolder, '/EventTestTargetHandler.js')
+        'testTarget':  path.join(__dirname, webpackTask.buildConfig.libFolder, 'EventTestTargetHandler.js')
     },
     output: {
         libraryTarget: 'umd',
