@@ -1,7 +1,6 @@
 import { LoggerFactory } from '@codification/cutwater-logging';
-import { Context } from 'aws-lambda';
 
 const LOG = LoggerFactory.getLogger();
-exports.handler = (event: any, context: Context) => {
+exports.handler = (event: any) => {
   LOG.info('Recieved event: ', event);
 };
