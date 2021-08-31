@@ -3,16 +3,16 @@ Transform: AWS::Serverless-2016-10-31
 
 Metadata:
   AWS::ServerlessRepo::Application:
-    Name: EventWriter
-    Description: "A serverless app that receives and stores events to an S3 bucket."
+    Name: ServerlessEventTestTarget
+    Description: "A serverless app that simply receives and logs events."
     Author: William Weiss
     SpdxLicenseId: MIT
     LicenseUrl: LICENSE
     ReadmeUrl: README.md
-    Labels: ["events", "s3"]
-    HomePageUrl: https://github.com/wweiss/aws-serverless-event-writer
+    Labels: ["test", "lambda", "events", "serverless"]
+    HomePageUrl: https://github.com/wweiss/aws-serverless-event-test-target
     SemanticVersion: 0.0.1
-    SourceCodeUrl: https://github.com/wweiss/aws-serverless-event-writer
+    SourceCodeUrl: https://github.com/wweiss/aws-serverless-event-test-target
 
 Parameters:
   LoggingLevel:
